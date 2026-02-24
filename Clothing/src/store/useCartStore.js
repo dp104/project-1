@@ -8,24 +8,27 @@ export const useCartStore = create((set) => ({
     closeCart: () => set({ isOpen: false }),
 
     addItem: (product) => set((state) => {
-        const existingItem = state.cartItems.find((item) => item.id === product.id)
+        const size = product.size || 'M';
+        const cartItemId = `${product.id}-${size}`;
+
+        const existingItem = state.cartItems.find((item) => item.cartItemId === cartItemId)
         if (existingItem) {
             return {
                 cartItems: state.cartItems.map((item) =>
-                    item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+                    item.cartItemId === cartItemId ? { ...item, quantity: item.quantity + (product.quantity || 1) } : item
                 ),
             }
         }
-        return { cartItems: [...state.cartItems, { ...product, quantity: 1 }], isOpen: true }
+        return { cartItems: [...state.cartItems, { ...product, size, cartItemId, quantity: product.quantity || 1 }], isOpen: true }
     }),
 
-    removeItem: (id) => set((state) => ({
-        cartItems: state.cartItems.filter((item) => item.id !== id),
+    removeItem: (cartItemId) => set((state) => ({
+        cartItems: state.cartItems.filter((item) => item.cartItemId !== cartItemId),
     })),
 
-    updateQuantity: (id, quantity) => set((state) => ({
+    updateQuantity: (cartItemId, quantity) => set((state) => ({
         cartItems: state.cartItems.map((item) =>
-            item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item
+            item.cartItemId === cartItemId ? { ...item, quantity: Math.max(1, quantity) } : item
         ),
     })),
 
