@@ -11,6 +11,7 @@ import { ProductDetails } from './pages/ProductDetails'
 import { Auth } from './pages/Auth'
 import { Checkout } from './pages/Checkout'
 import { CustomDesigner } from './pages/CustomDesigner'
+import { Cart } from './pages/Cart'
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                         <Route path="/auth" element={<Auth />} />
                         <Route path="/checkout" element={<Checkout />} />
                         <Route path="/customize" element={<CustomDesigner />} />
+                        <Route path="/cart" element={<Cart />} />
                     </Routes>
                 </main>
                 <Footer />
