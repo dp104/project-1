@@ -25,7 +25,7 @@ export function Navbar() {
     return (
         <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-black/80 backdrop-blur-xl py-4 border-b border-white/5' : 'bg-transparent py-4'
             }`}>
-            <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid grid-cols-3 items-center text-white">
+            <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex justify-between md:grid md:grid-cols-3 items-center text-white">
                 {/* Logo - Left Part */}
                 <div className="flex justify-start">
                     <Link to="/" className="group flex items-center">
@@ -90,10 +90,10 @@ export function Navbar() {
                                 <X size={32} />
                             </button>
                         </div>
-                        <div className="flex flex-col space-y-10 text-3xl font-cyber">
-                            <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>HOME</Link>
-                            <Link to="/shop" onClick={() => setIsMobileMenuOpen(false)}>SHOP</Link>
-                            <Link to="/customize" onClick={() => setIsMobileMenuOpen(false)}>CUSTOMIZE</Link>
+                        <div className="flex flex-col space-y-10 text-xl md:text-2xl tracking-[0.3em] uppercase font-cyber font-medium items-center justify-center mt-10">
+                            <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-pink-500 transition-colors">HOME</Link>
+                            <Link to="/shop" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-cyan-400 transition-colors">SHOP</Link>
+                            <Link to="/customize" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-pink-500 transition-colors">CUSTOMIZE</Link>
                         </div>
                     </motion.div>
                 )}
