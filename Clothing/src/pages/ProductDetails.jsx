@@ -114,7 +114,7 @@ export function ProductDetails() {
                                 </button>
                             </div>
                             <Button
-                                onClick={() => addItem({ ...product, quantity })}
+                                onClick={() => addItem({ ...product, quantity, size: selectedSize })}
                                 className="flex-1 py-5 text-sm"
                             >
                                 INJECT TO CARGO.X
