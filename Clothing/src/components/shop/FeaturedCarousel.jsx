@@ -259,6 +259,7 @@ export function FeaturedCarousel({ products }) {
                                             alt={product.name}
                                             className="w-full h-full object-cover"
                                             draggable={false}
+                                            onError={e => { e.target.style.display = 'none'; e.target.parentElement.style.background = '#f3f4f6'; }}
                                         />
                                         <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm shadow-sm text-gray-800 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest z-10">
                                             NEW
