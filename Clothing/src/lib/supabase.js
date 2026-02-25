@@ -4,10 +4,13 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn('Missing Supabase environment variables. Features requiring a backend will be disabled.')
+    console.error(
+        '[Supabase] Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY in your .env file. ' +
+        'Copy your credentials from Supabase Dashboard → Settings → API.'
+    )
 }
 
 export const supabase = createClient(
-    supabaseUrl || 'https://placeholder.supabase.co',
-    supabaseAnonKey || 'placeholder'
+    supabaseUrl ?? '',
+    supabaseAnonKey ?? ''
 )
