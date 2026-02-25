@@ -3,6 +3,8 @@ import { create } from 'zustand'
 export const useCartStore = create((set) => ({
     cartItems: [],
     isOpen: false,
+    appliedCoupon: null,  // { code, type, value, id }
+    discount: 0,          // discount amount in ₹ (integer)
 
     openCart: () => set({ isOpen: true }),
     closeCart: () => set({ isOpen: false }),
@@ -32,7 +34,13 @@ export const useCartStore = create((set) => ({
         ),
     })),
 
-    clearCart: () => set({ cartItems: [] }),
+    clearCart: () => set({ cartItems: [], appliedCoupon: null, discount: 0 }),
+
+    // coupon: { id, code, type ('percent'|'flat'), value }
+    // discountAmount: final ₹ savings (already computed)
+    applyCoupon: (coupon, discountAmount) => set({ appliedCoupon: coupon, discount: discountAmount }),
+
+    removeCoupon: () => set({ appliedCoupon: null, discount: 0 }),
 
     getTotal: () => {
         // Note: This helper might be better as a selector or inside the component
