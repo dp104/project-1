@@ -1,5 +1,5 @@
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 
 import { Navbar } from './components/layout/Navbar'
 import { Footer } from './components/layout/Footer'
@@ -12,27 +12,64 @@ import { Auth } from './pages/Auth'
 import { Checkout } from './pages/Checkout'
 import { CustomDesigner } from './pages/CustomDesigner'
 import { Cart } from './pages/Cart'
+import { AdminPanel } from './pages/AdminPanel'
+import { AdminLogin } from './pages/AdminLogin'
+import { useAuthStore } from './store/useAuthStore'
+
+function ProtectedAdminRoute({ children }) {
+    const user = useAuthStore((s) => s.user)
+    const loading = useAuthStore((s) => s.loading)
+    if (loading) return null
+    return user ? children : <Navigate to="/admin/login" replace />
+}
+
+function ProtectedRoute({ children }) {
+    const user = useAuthStore((s) => s.user)
+    const loading = useAuthStore((s) => s.loading)
+    if (loading) return null
+    return user ? children : <Navigate to="/auth" replace />
+}
 
 function App() {
+    const initialize = useAuthStore((s) => s.initialize)
+
+    useEffect(() => {
+        const unsub = initialize()
+        return () => { if (typeof unsub?.then === 'function') unsub.then(fn => fn?.()) }
+    }, [])
+
     return (
         <Router>
             <ScrollToTop />
-            <div className="min-h-screen bg-cyber-black">
-                <Navbar />
-                <CartDrawer />
-                <main>
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/shop" element={<Shop />} />
-                        <Route path="/product/:id" element={<ProductDetails />} />
-                        <Route path="/auth" element={<Auth />} />
-                        <Route path="/checkout" element={<Checkout />} />
-                        <Route path="/customize" element={<CustomDesigner />} />
-                        <Route path="/cart" element={<Cart />} />
-                    </Routes>
-                </main>
-                <Footer />
-            </div>
+            <Routes>
+                {/* ── Admin routes — full screen, no Navbar/Footer ── */}
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin" element={
+                    <ProtectedAdminRoute><AdminPanel /></ProtectedAdminRoute>
+                } />
+
+                {/* ── Store routes — with Navbar & Footer ── */}
+                <Route path="/*" element={
+                    <div className="min-h-screen bg-cyber-black">
+                        <Navbar />
+                        <CartDrawer />
+                        <main>
+                            <Routes>
+                                <Route path="/" element={<Home />} />
+                                <Route path="/shop" element={<Shop />} />
+                                <Route path="/product/:id" element={<ProductDetails />} />
+                                <Route path="/auth" element={<Auth />} />
+                                <Route path="/customize" element={<CustomDesigner />} />
+                                <Route path="/cart" element={<Cart />} />
+                                <Route path="/checkout" element={
+                                    <ProtectedRoute><Checkout /></ProtectedRoute>
+                                } />
+                            </Routes>
+                        </main>
+                        <Footer />
+                    </div>
+                } />
+            </Routes>
         </Router>
     )
 }
