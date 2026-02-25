@@ -58,12 +58,12 @@ export function CartDrawer() {
                     >
                         {/* Header */}
                         <div className="flex items-center justify-between px-8 py-8 pt-10">
-                            <h2 className="text-xl font-medium tracking-wide flex items-center gap-2">
-                                Your Bag <span className="text-gray-500 text-base font-normal">({cartItems.length})</span>
+                            <h2 className="text-xl font-bold tracking-wide flex items-center gap-2">
+                                Your Bag <span className="text-gray-400 text-base font-medium">({cartItems.length})</span>
                             </h2>
                             <button
                                 onClick={closeCart}
-                                className="w-10 h-10 flex items-center justify-center bg-[#161616] hover:bg-[#222] transition-colors rounded-full text-gray-400 hover:text-white"
+                                className="w-10 h-10 flex items-center justify-center bg-[#161616] hover:bg-[#222] transition-colors rounded-full text-gray-300 hover:text-white"
                             >
                                 <X size={18} strokeWidth={1.5} />
                             </button>
@@ -76,10 +76,10 @@ export function CartDrawer() {
                             <div className="flex-1 px-6 space-y-4">
                                 {cartItems.length === 0 ? (
                                     <div className="h-full flex flex-col items-center justify-center text-center space-y-4 pb-20">
-                                        <p className="text-gray-500 font-medium">Your bag is currently empty.</p>
+                                        <p className="text-gray-300 font-semibold tracking-wide">Your bag is currently empty.</p>
                                         <button
                                             onClick={closeCart}
-                                            className="text-sm font-medium text-white hover:text-gray-300 transition-colors underline decoration-white/30 underline-offset-4"
+                                            className="text-sm font-bold text-white hover:text-gray-300 transition-colors underline decoration-white/30 underline-offset-4 tracking-wide"
                                         >
                                             Continue Shopping
                                         </button>
@@ -107,17 +107,17 @@ export function CartDrawer() {
                                                 <div className="flex-1 flex flex-col justify-between py-1">
                                                     <div>
                                                         <div className="flex justify-between items-start mb-1">
-                                                            <h3 className="text-sm font-medium tracking-widest uppercase leading-tight pr-4">
+                                                            <h3 className="text-sm font-bold tracking-widest uppercase leading-tight pr-4">
                                                                 {item.name}
                                                             </h3>
                                                             <button
                                                                 onClick={() => removeItem(item.cartItemId)}
-                                                                className="text-gray-500 hover:text-white transition-colors flex-shrink-0 mt-0.5 mr-1"
+                                                                className="text-gray-400 hover:text-red-400 transition-colors flex-shrink-0 mt-0.5 mr-1"
                                                             >
                                                                 <Trash2 size={16} strokeWidth={1.5} />
                                                             </button>
                                                         </div>
-                                                        <div className="text-[10px] text-gray-500 font-medium uppercase tracking-[0.2em] mt-2">
+                                                        <div className="text-[11px] text-gray-400 font-bold uppercase tracking-[0.2em] mt-2">
                                                             {item.category.split('|')[0]} &nbsp;&bull;&nbsp; SIZE: {item.size}
                                                         </div>
                                                     </div>
@@ -127,22 +127,22 @@ export function CartDrawer() {
                                                         <div className="flex items-center justify-between bg-[#1a1a1a] rounded-full px-3 py-1.5 w-[90px]">
                                                             <button
                                                                 onClick={() => updateQuantity(item.cartItemId, Math.max(1, item.quantity - 1))}
-                                                                className="text-gray-400 hover:text-white transition-colors"
+                                                                className="text-gray-300 hover:text-white transition-colors"
                                                             >
                                                                 <Minus size={14} />
                                                             </button>
-                                                            <span className="text-xs font-medium w-4 text-center">
+                                                            <span className="text-xs font-bold w-4 text-center">
                                                                 {item.quantity}
                                                             </span>
                                                             <button
                                                                 onClick={() => updateQuantity(item.cartItemId, item.quantity + 1)}
-                                                                className="text-gray-400 hover:text-white transition-colors"
+                                                                className="text-gray-300 hover:text-white transition-colors"
                                                             >
                                                                 <Plus size={14} />
                                                             </button>
                                                         </div>
 
-                                                        <p className="text-sm font-bold mr-1 tracking-wide">
+                                                        <p className="text-[15px] font-black mr-1 tracking-wide">
                                                             ₹{(parseInt(item.price.replace(/,/g, '')) * item.quantity).toLocaleString('en-IN')}
                                                         </p>
                                                     </div>
@@ -161,25 +161,25 @@ export function CartDrawer() {
                                         <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl" />
                                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
 
-                                        <div className="space-y-4 font-medium mb-12 relative z-10">
-                                            <div className="flex justify-between items-center text-gray-400 text-sm">
+                                        <div className="space-y-4 font-bold mb-12 relative z-10">
+                                            <div className="flex justify-between items-center text-gray-300 text-sm tracking-wide">
                                                 <span>Subtotal</span>
                                                 <span className="text-white">₹{subtotal.toLocaleString('en-IN')}</span>
                                             </div>
-                                            <div className="flex justify-between items-center text-gray-400 text-sm">
+                                            <div className="flex justify-between items-center text-gray-300 text-sm tracking-wide">
                                                 <span>Shipping</span>
-                                                <span className="text-emerald-400 font-medium">Complimentary</span>
+                                                <span className="text-emerald-400 font-bold">Complimentary</span>
                                             </div>
                                         </div>
 
                                         <div className="flex justify-between items-center mb-6">
-                                            <span className="text-[11px] text-gray-500 font-semibold uppercase tracking-widest">Estimated Total</span>
-                                            <span className="text-2xl font-bold tracking-tight">₹{subtotal.toLocaleString('en-IN')}</span>
+                                            <span className="text-[12px] text-gray-400 font-bold uppercase tracking-widest">Estimated Total</span>
+                                            <span className="text-2xl font-black tracking-tight">₹{subtotal.toLocaleString('en-IN')}</span>
                                         </div>
 
                                         <button
                                             onClick={handleCheckout}
-                                            className="w-full py-4 bg-white text-black font-semibold hover:bg-gray-200 transition-colors rounded-full flex justify-center items-center gap-2 text-sm"
+                                            className="w-full py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-gray-200 transition-colors rounded-full flex justify-center items-center gap-3 text-sm"
                                         >
                                             <span>Secure Checkout</span>
                                             <ArrowRight size={18} strokeWidth={2} />
